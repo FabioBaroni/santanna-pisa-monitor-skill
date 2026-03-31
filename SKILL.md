@@ -12,133 +12,131 @@ prerequisites:
   commands: []
 ---
 
-# Sant'Anna Pisa - Monitoraggio Bandi e Corsi
+# Sant'Anna Pisa - Job and Course Monitor
 
-Monitora le pagine del sito della Scuola Superiore Sant'Anna di Pisa per bandi, concorsi, selezioni, corsi e opportunita' formative/lavorative.
+Monitors the Scuola Superiore Sant'Anna di Pisa website for job postings, admissions, courses, and educational/employment opportunities.
 
-**Sito:** https://www.santannapisa.it/it
-**Nessuna API key o dipendenza richiesta** — usa `browser_navigate` e `browser_snapshot`
+**Website:** https://www.santannapisa.it/it
+**No API keys or dependencies required** — uses `browser_navigate` and `browser_snapshot`
 
-## Pagine chiave
+## Key Pages
 
-### LAVORO / SELEZIONI
-| Pagina | URL | Cosa contiene |
-|--------|-----|---------------|
-| Hub concorsi | `/it/ateneo/concorsi-selezioni-e-gare` | Hub centrale con tutte le categorie (lavoro + formazione) |
-| Selezioni attive | `/it/cerca-selezioni?status=current` | Bandi lavorativi attivi |
-| Selezioni in scadenza | `/it/cerca-selezioni?status=expiring` | Bandi lavorativi prossimi alla scadenza |
-| Archivio selezioni | `/it/cerca-selezioni?status=expired` | Bandi scaduti |
+### JOBS / SELECTIONS
+| Page | URL | Content |
+|------|-----|---------|
+| Competitions hub | `/it/ateneo/concorsi-selezioni-e-gare` | Central hub with all categories (jobs + education) |
+| Active selections | `/it/cerca-selezioni?status=current` | Currently open job postings |
+| Expiring selections | `/it/cerca-selezioni?status=expiring` | Job postings closing soon |
+| Selection archive | `/it/cerca-selezioni?status=expired` | Closed/expired postings |
 
-### CORSI / FORMAZIONE
-| Pagina | URL | Cosa contiene |
-|--------|-----|---------------|
-| Entrare al Sant'Anna | `/it/entrare-al-sant-anna` | **HUB principale** — scadenze concorsi ammissione |
-| Concorso I livello | `/it/concorso-di-primo-livello-e-ciclo-unico` | Bando, date prove, scadenze triennale |
-| Concorso II livello | `/it/concorso-di-secondo-livello` | Bando, date prove, scadenze magistrale |
-| Bando PhD | `/it/formazione/bando-phd` | **Bando PhD corrente** con scadenze e posizioni |
-| PhD overview | `/it/formazione/phd` | Lista tutti i PhD, link a bando e FAQ |
-| Master I livello | `/it/master-i-livello` | Lista Master I livello |
-| Master II livello | `/it/master-ii-livello` | Lista Master II livello |
-| Seasonal School | `/it/formazione/seasonal-school` | Corsi estivi con date |
-| Come accedere Seasonal School | `/it/formazione/come-accedere-seasonal-school` | Info iscrizioni Seasonal School |
+### COURSES / EDUCATION
+| Page | URL | Content |
+|------|-----|---------|
+| Enter Sant'Anna | `/it/entrare-al-sant-anna` | **Main hub** — admissions deadlines for all levels |
+| Bachelor admission | `/it/concorso-di-primo-livello-e-ciclo-unico` | Entrance exam info and deadlines for Bachelor (3-yr) |
+| Master admission | `/it/concorso-di-secondo-livello` | Entrance exam info and deadlines for Master (2-yr) |
+| PhD call | `/it/formazione/bando-phd` | **Current PhD call** with positions and deadlines |
+| PhD overview | `/it/formazione/phd` | List of all PhD programs |
+| Master I level | `/it/master-i-livello` | 1st level Master programs list |
+| Master II level | `/it/master-ii-livello` | 2nd level Master programs list |
+| Seasonal School | `/it/formazione/seasonal-school` | Short intensive courses with dates |
+| How to apply (Seasonal) | `/it/formazione/come-accedere-seasonal-school` | Seasonal School application info |
 
-## Categorie di selezioni (filtri URL)
+## Job Selection Categories (URL Filters)
 
-Aggiungi `?categories[0]=NOME_CATEGORIA` a `/it/cerca-selezioni`:
+Append `?categories[0]=CATEGORY_NAME` to `/it/cerca-selezioni`:
 
-| Categoria | Filter URL | Descrizione |
-|-----------|-----------|-------------|
-| Personale docente | `personale_docente_e_ricercatore` | Professori e ricercatori |
-| Ricercatori TD | `selezioni_ricercatori_a_temp_determinato` | RTD-A, RTD-B |
-| Contratti di ricerca | `contratto_di_ricerca` | Assegni/contratti di ricerca |
-| Post doc | `incarichi_post_doc` | Incarichi post-dottorato |
-| Incarichi ricerca | `incarichi_di_ricerca_selezione` | Selezione diretta |
-| Manifestazione interesse | `incarichi_di_ricerca_interesse` | Chiamata aperta |
-| Assegni di ricerca | `assegni_di_ricerca` | Archivio assegni |
-| Didattica | `incarichi_di_insegnamento` | Insegnamenti |
-| Tecnico-amministrativo | `selezioni_personale_tecnico_amm` | Personale TA |
-| Tecnologo | `selezioni_personale_tecnologo` | Ruoli tecnologici |
-| Incarichi esterni | `incarichi_esterni` | Collaborazioni esterne |
+| Category | Filter URL | Description |
+|----------|-----------|-------------|
+| Teaching/research staff | `personale_docente_e_ricercatore` | Professors and researchers |
+| Fixed-term researchers | `selezioni_ricercatori_a_temp_determinato` | RTD-A, RTD-B positions |
+| Research contracts | `contratto_di_ricerca` | Research grants/contracts |
+| Post-doc | `incarichi_post_doc` | Post-doctoral positions |
+| Research positions (direct) | `incarichi_di_ricerca_selezione` | Direct selection |
+| Expression of interest | `incarichi_di_ricerca_interesse` | Open call |
+| Research grants archive | `assegni_di_ricerca` | Archived grants |
+| Teaching | `incarichi_di_insegnamento` | Teaching assignments |
+| Technical-admin staff | `selezioni_personale_tecnico_amm` | Technical/administrative staff |
+| Technologist | `selezioni_personale_tecnologo` | Technologist roles |
+| External assignments | `incarichi_esterni` | External collaborations |
 
-## Come monitorare (workflow completo)
+## How to Monitor (Complete Workflow)
 
-Il monitoraggio si divide in due sezioni: **SELEZIONI** (lavoro) e **CORSI** (formazione).
+### SECTION A: JOBS
 
-### SEZIONE A: SELEZIONI (LAVORO)
-
-Dallo snapshot di `/it/cerca-selezioni`, ogni bando ha:
+From the snapshot of `/it/cerca-selezioni`, each posting has this structure:
 ```
 - article:
     - text: Data pubblicazione bando DD.MM.YYYY
     - text: ID Bando: NNN/YYYY
-    - heading "Titolo" [ref=eXX] [level=3]:
-      - link "Titolo" [ref=eXX]: - /url: "/it/assegni-di-ricerca-e-selezioni-incarichi-esterni/..."
+    - heading "Title" [ref=eXX] [level=3]:
+      - link "Title" [ref=eXX]: - /url: "/it/assegni-di-ricerca-e-selezioni-incarichi-esterni/..."
     - text: Termine presentazione domanda DD.MM.YYYY
 ```
 
-### SEZIONE B: CORSI (FORMAZIONE) — SCADENZE
+### SECTION B: COURSES / EDUCATION — DEADLINES
 
-#### Bando Concorso Ammissione I e II livello (da /it/entrare-al-sant-anna)
+#### Bachelor/Master Admission (from /it/entrare-al-sant-anna)
 ```
 - heading "Bando del Concorso di Ammissione YYYY/YYYY"
-- "Termine iscrizione domanda Concorso I livello:" → DD mese YYYY, ore HH:MM
-- "Termine iscrizione domanda Concorso II livello:" → DD mese YYYY, ore HH:MM
+- "Termine iscrizione domanda Concorso I livello:" → DD month YYYY, ore HH:MM
+- "Termine iscrizione domanda Concorso II livello:" → DD month YYYY, ore HH:MM
 - PDF: https://www.santannapisa.it/sites/default/files/YYYY-MM/Bando%20unico%20Concorso%20di%20Ammissione%20I%20e%20II%20livello%20YYYY-YY.pdf
 ```
 
-#### Bando PhD (da /it/formazione/bando-phd)
+#### PhD Call (from /it/formazione/bando-phd)
 ```
 - heading "Bando PhD YYYY/YYYY"
-- "NN posizioni"
-- Scadenza generale: "DD mese YYYY, ore HH:MM"
-- Scadenza PhD Economics: "DD mese YYYY, ore HH:MM" (anticipata)
+- "NN positions"
+- General deadline: "DD month YYYY, ore HH:MM"
+- PhD Economics deadline: "DD month YYYY, ore HH:MM" (earlier)
 - PDF: https://www.santannapisa.it/sites/default/files/.../Bando%20concorso%20PhD%20...pdf
-- Iscrizione: https://sssup.esse3.cineca.it/Home.do
+- Online application: https://sssup.esse3.cineca.it/Home.do
 ```
 
-#### Seasonal School (da /it/formazione/seasonal-school)
+#### Seasonal School (from /it/formazione/seasonal-school)
 
-La pagina ha ~36 corsi in card con layout a 3 colonne. Serve scrollare per catturarli tutti.
+The page has ~36 courses displayed in a 3-column card layout. **Scroll down 3-4 times** to capture all courses.
 
 ```
 - heading "Programma YYYY-YYYY"
-- Per ogni corso (card):
-    - heading level 3: Nome corso
-    - link: /it/seasonalschool/nome-corso
-    - paragraph: date (es. "March 23rd - 27th, 2026")
-- Archivio programmi precedenti: 24-25, 23-24, 22-23, 21-22
+- For each course (card):
+    - heading level 3: Course name
+    - link: /it/seasonalschool/course-name
+    - paragraph: dates (e.g. "March 23rd - 27th, 2026")
+- Previous program archives: 24-25, 23-24, 22-23, 21-22
 ```
 
-Per le scadenze di iscrizione: navigare `/it/formazione/come-accedere-seasonal-school`
-- Deadline per corsi invernali: tipicamente ~2 mesi prima
-- Deadline per corsi primaverili: ~1-2 mesi prima
-- Deadline per corsi estivi: ~1 mese prima
+For application deadlines: navigate `/it/formazione/come-accedere-seasonal-school`
+- Winter courses: deadlines typically ~2 months before
+- Spring courses: deadlines ~1-2 months before  
+- Summer courses: deadlines ~1 month before
 
-#### Master (da /it/master-i-livello e /it/master-ii-livello)
-Ogni Master ha la sua pagina con:
-- Titolo del Master
-- Scadenza domanda
-- Link al bando
+#### University Masters (from /it/master-i-livello and /it/master-ii-livello)
+Each Master has its own page with:
+- Master title
+- Application deadline
+- PDF call link
 
-## Monitoraggio completo (cronjob workflow)
+## Complete Monitoring (Cronjob Workflow)
 
-Per un check completo, naviga in ordine:
-1. `/it/cerca-selezioni?status=expiring` — selezioni lavoro in scadenza
-2. `/it/cerca-selezioni?status=current` — selezioni lavoro attive
-3. `/it/entrare-al-sant-anna` — scadenze concorso ammissione I e II livello
-4. `/it/formazione/bando-phd` — stato bando PhD
-5. `/it/formazione/seasonal-school` — corsi Seasonal School (scrollare 3-4x per catturare tutto)
-6. `/it/formazione/come-accedere-seasonal-school` — scadenze Seasonal School
-7. `/it/master-i-livello` — Master I livello
-8. `/it/master-ii-livello` — Master II livello
+For a full check, navigate in order:
+1. `/it/cerca-selezioni?status=expiring` — job postings closing soon
+2. `/it/cerca-selezioni?status=current` — active job postings
+3. `/it/entrare-al-sant-anna` — Bachelor/Master admission deadlines
+4. `/it/formazione/bando-phd` — PhD call status
+5. `/it/formazione/seasonal-school` — Seasonal School courses (scroll 3-4x to capture all)
+6. `/it/formazione/come-accedere-seasonal-school` — Seasonal School application info
+7. `/it/master-i-livello` — 1st level Master programs
+8. `/it/master-ii-livello` — 2nd level Master programs
 
-## Estrazione URL completi
-I link relativi vanno prefixati con `https://www.santannapisa.it`
+## URL Construction
+Relative links (e.g. `/it/...`) should be prefixed with `https://www.santannapisa.it` to form full URLs.
 
-## Note e Pitfalls
-- Sito Drupal-based, contenuti server-side, nessun feed RSS
-- Cookie banner presente — ignorare
-- Bando PhD cambia URL ogni anno ma `/it/formazione/bando-phd` e' sempre corrente
-- Bando concorso ammissione I/II livello ha URL PDF che cambia annualmente
-- Confrontare sempre con la versione precedente per rilevare novita'
-- Le pagine individuali dei corsi Summer School futuri (aprile-luglio) potrebbero non essere ancora pubblicate — verificare periodicamente
+## Notes and Pitfalls
+- Drupal-based site, server-side rendering, no RSS feeds available
+- Cookie banner present on most pages — ignore it
+- PhD call URL changes yearly but `/it/formazione/bando-phd` always points to the current one
+- Bachelor/Master admission PDF URLs change annually
+- Always compare with previous check to detect new postings or changes
+- Individual pages for future Summer School courses (April-July) may not be published yet — check periodically
